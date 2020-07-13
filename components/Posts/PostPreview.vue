@@ -1,5 +1,5 @@
 <template>
-  <nuxt-link :to="'/posts/' + id" class="post-preview">
+  <nuxt-link :to="postLink" class="post-preview">
     <article>
       <div
         class="post-thumbnail"
@@ -22,6 +22,10 @@ export default {
       type: String,
       required: true
     },
+    isAdmin: {
+      type: Boolean,
+      required: true
+    },
     title: {
       type: String,
       required: true
@@ -33,6 +37,11 @@ export default {
     thumbnail: {
       type: String,
       required: true
+    }
+  },
+  computed: {
+    postLink() {
+      return this.isAdmin ? "/admin/" + this.id : "/posts/" + this.id;
     }
   }
 };
@@ -63,15 +72,24 @@ a {
   height: 200px;
   background-position: center;
   background-size: cover;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
 }
 
 .post-content {
   padding: 10px;
   text-align: center;
+  width: 100%;
+  background-color: white;
 }
 
 a:hover .post-content,
 a:active .post-content {
   background-color: #ccc;
+}
+.post-content h1,
+.post-content p {
+  margin: 5px 0;
 }
 </style>
